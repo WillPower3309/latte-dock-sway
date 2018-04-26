@@ -70,9 +70,9 @@ DockView::DockView(Plasma::Corona *corona, QScreen *targetScreen, bool dockWindo
 			QString::fromUtf8("panel")),
       m_menuManager(new DockMenuManager(this))
 {
-	setAnchor(QtLayerShell::LayerView::anchor_right
-			| QtLayerShell::LayerView::anchor_top
-			| QtLayerShell::LayerView::anchor_bottom);
+	setAnchor(QtLayerShell::LayerView::anchor_bottom
+			| QtLayerShell::LayerView::anchor_left
+			| QtLayerShell::LayerView::anchor_right);
 
     setTitle(corona->kPackage().metadata().name());
     setIcon(qGuiApp->windowIcon());
@@ -833,43 +833,27 @@ void DockView::updatePosition(QRect availableScreenRect)
 
     switch (location()) {
         case Plasma::Types::TopEdge:
-            if (m_behaveAsPlasmaPanel) {
-                position = {screenGeometry.x() + length(screenGeometry.width()), screenGeometry.y()};
-            } else {
-                position = {screenGeometry.x(), screenGeometry.y()};
-            }
-
+			setAnchor(QtLayerShell::LayerView::anchor_top
+					| QtLayerShell::LayerView::anchor_left
+					| QtLayerShell::LayerView::anchor_right);
             break;
 
         case Plasma::Types::BottomEdge:
-            if (m_behaveAsPlasmaPanel) {
-                position = {screenGeometry.x() + length(screenGeometry.width()),
-                            screenGeometry.y() + screenGeometry.height() - cleanThickness
-                           };
-            } else {
-                position = {screenGeometry.x(), screenGeometry.y() + screenGeometry.height() - height()};
-            }
-
+			setAnchor(QtLayerShell::LayerView::anchor_bottom
+					| QtLayerShell::LayerView::anchor_left
+					| QtLayerShell::LayerView::anchor_right);
             break;
 
         case Plasma::Types::RightEdge:
-            if (m_behaveAsPlasmaPanel && !mask().isNull()) {
-                position = {availableScreenRect.right() - cleanThickness + 1,
-                            availableScreenRect.y() + length(availableScreenRect.height())
-                           };
-            } else {
-                position = {availableScreenRect.right() - width() + 1, availableScreenRect.y()};
-            }
-
+			setAnchor(QtLayerShell::LayerView::anchor_bottom
+					| QtLayerShell::LayerView::anchor_top
+					| QtLayerShell::LayerView::anchor_right);
             break;
 
         case Plasma::Types::LeftEdge:
-            if (m_behaveAsPlasmaPanel && !mask().isNull()) {
-                position = {availableScreenRect.x(), availableScreenRect.y() + length(availableScreenRect.height())};
-            } else {
-                position = {availableScreenRect.x(), availableScreenRect.y()};
-            }
-
+			setAnchor(QtLayerShell::LayerView::anchor_bottom
+					| QtLayerShell::LayerView::anchor_top
+					| QtLayerShell::LayerView::anchor_left);
             break;
 
         default:
