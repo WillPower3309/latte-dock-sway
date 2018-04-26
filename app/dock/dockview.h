@@ -38,6 +38,8 @@
 
 #include <Plasma/Theme>
 
+#include <QtLayerShell/LayerView>
+
 namespace Plasma {
 class Types;
 class Corona;
@@ -57,7 +59,7 @@ class Layout;
 
 namespace Latte {
 
-class DockView : public PlasmaQuick::ContainmentView {
+class DockView : public PlasmaQuick::ContainmentView, public QtLayerShell::LayerView {
     Q_OBJECT
     Q_PROPERTY(bool alternativesIsShown READ alternativesIsShown NOTIFY alternativesIsShownChanged)
     Q_PROPERTY(bool behaveAsPlasmaPanel READ behaveAsPlasmaPanel WRITE setBehaveAsPlasmaPanel NOTIFY behaveAsPlasmaPanelChanged)

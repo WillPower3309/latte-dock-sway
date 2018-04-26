@@ -57,6 +57,8 @@
 #include <KWayland/Client/plasmashell.h>
 #include <KWayland/Client/surface.h>
 
+#include <QtLayerShell/LayerView>
+
 namespace Latte {
 
 //! both alwaysVisible and dockWinBehavior are passed through corona because
@@ -64,8 +66,12 @@ namespace Latte {
 //! are needed in order for window flags to be set correctly
 DockView::DockView(Plasma::Corona *corona, QScreen *targetScreen, bool dockWindowBehavior)
     : PlasmaQuick::ContainmentView(corona),
+	  QtLayerShell::LayerView(QtLayerShell::LayerView::layer_top,
+			QString::fromUtf8("panel")),
       m_menuManager(new DockMenuManager(this))
 {
+	setAnchor(QtLayerShell::LayerView::anchor_right);
+
     setTitle(corona->kPackage().metadata().name());
     setIcon(qGuiApp->windowIcon());
     setResizeMode(QuickViewSharedEngine::SizeRootObjectToView);

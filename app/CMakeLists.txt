@@ -60,6 +60,7 @@ target_link_libraries(latte-dock
     KF5::NewStuff
     KF5::QuickAddons
     KF5::WaylandClient
+    ${QTLAYERSHELL_LIBRARIES}
 )
 
 if(HAVE_X11)

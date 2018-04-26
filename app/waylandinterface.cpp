@@ -45,14 +45,14 @@ class Private::GhostWindow : public QRasterWindow {
     Q_OBJECT
 
 public:
-    GhostWindow(WaylandInterface *waylandInterface)
-        : m_waylandInterface(waylandInterface) {
+    GhostWindow(WaylandInterface *waylandInterface) :
+		  m_waylandInterface(waylandInterface) {
         setFlags(Qt::FramelessWindowHint
                  | Qt::WindowStaysOnTopHint
                  | Qt::NoDropShadowWindowHint
                  | Qt::WindowDoesNotAcceptFocus);
 
-        setupWaylandIntegration();
+        //setupWaylandIntegration();
         show();
     }
 
@@ -304,6 +304,10 @@ bool WaylandInterface::isOnCurrentDesktop(WindowId wid) const
 
 bool WaylandInterface::isOnCurrentActivity(WindowId wid) const
 {
+	if (!m_windowManagement) {
+		return true;
+	}
+
     auto it = std::find_if(m_windowManagement->windows().constBegin(), m_windowManagement->windows().constEnd(), [&wid](PlasmaWindow * w) noexcept {
         return w->isValid() && w->internalId() == wid;
     });
@@ -315,6 +319,10 @@ bool WaylandInterface::isOnCurrentActivity(WindowId wid) const
 
 WindowInfoWrap WaylandInterface::requestInfo(WindowId wid) const
 {
+	if (!m_windowManagement) {
+		return {};
+	}
+
     auto it = std::find_if(m_windowManagement->windows().constBegin(), m_windowManagement->windows().constEnd(), [&wid](PlasmaWindow * w) noexcept {
         return w->isValid() && w->internalId() == wid;
     });

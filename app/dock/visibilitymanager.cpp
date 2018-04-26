@@ -124,9 +124,10 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
     switch (this->mode) {
         case Dock::AlwaysVisible: {
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::WindowsGoBelow);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::WindowsGoBelow);
+            //}
 
             if (view->containment() && !dockView->inEditMode() && view->screen()) {
                 updateStrutsBasedOnLayoutsAndActivities();
@@ -159,9 +160,10 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
 
         case Dock::AutoHide: {
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
+            //}
 
             raiseDock(containsMouse);
         }
@@ -169,9 +171,10 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
 
         case Dock::DodgeActive: {
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
+            //}
 
             connections[0] = connect(wm, &WindowSystem::activeWindowChanged
                                      , this, &VisibilityManagerPrivate::dodgeActive);
@@ -183,9 +186,10 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
 
         case Dock::DodgeMaximized: {
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
+            //}
 
             connections[0] = connect(wm, &WindowSystem::activeWindowChanged
                                      , this, &VisibilityManagerPrivate::dodgeMaximized);
@@ -197,9 +201,10 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
 
         case Dock::DodgeAllWindows: {
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::AutoHide);
+            //}
 
             for (const auto &wid : wm->windows()) {
                 windows.insert(wid, wm->requestInfo(wid));
@@ -223,11 +228,11 @@ inline void VisibilityManagerPrivate::setMode(Dock::Visibility mode)
         break;
 
         case Dock::WindowsGoBelow:
-
             //set wayland visibility mode
-            if (dockView->surface()) {
-                dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::WindowsGoBelow);
-            }
+			// TODO layer-shell
+            //if (dockView->surface()) {
+            //    dockView->surface()->setPanelBehavior(KWayland::Client::PlasmaShellSurface::PanelBehavior::WindowsGoBelow);
+            //}
 
             break;
 
