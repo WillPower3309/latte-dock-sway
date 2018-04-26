@@ -135,17 +135,16 @@ void WaylandInterface::setDockExtraFlags(QWindow &view)
 
 void WaylandInterface::setDockStruts(QWindow *view, const QRect &rect , Plasma::Types::Location location)
 {
-	fprintf(stderr, "setting struts %e\n", rect.y() + rect.height() / 2);
 	auto layerView = dynamic_cast<QtLayerShell::LayerView*>(view);
 	switch (location) {
 		case Plasma::Types::TopEdge:
 		case Plasma::Types::BottomEdge:
-			layerView->setExclusiveZone(rect.x() + rect.width() / 2);
+			layerView->setExclusiveZone(view->height() / 2);
 			break;
 
 		case Plasma::Types::LeftEdge:
 		case Plasma::Types::RightEdge:
-			layerView->setExclusiveZone(rect.y() + rect.height() / 2);
+			layerView->setExclusiveZone(view->width() / 2);
 			break;
 
 		default:

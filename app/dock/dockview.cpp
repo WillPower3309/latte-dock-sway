@@ -70,7 +70,9 @@ DockView::DockView(Plasma::Corona *corona, QScreen *targetScreen, bool dockWindo
 			QString::fromUtf8("panel")),
       m_menuManager(new DockMenuManager(this))
 {
-	setAnchor(QtLayerShell::LayerView::anchor_right);
+	setAnchor(QtLayerShell::LayerView::anchor_right
+			| QtLayerShell::LayerView::anchor_top
+			| QtLayerShell::LayerView::anchor_bottom);
 
     setTitle(corona->kPackage().metadata().name());
     setIcon(qGuiApp->windowIcon());
