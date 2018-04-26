@@ -75,11 +75,12 @@ int main(int argc, char **argv)
     QQuickWindow::setDefaultAlphaBuffer(true);
 
     const bool qpaVariable = qEnvironmentVariableIsSet("QT_QPA_PLATFORM");
+    const bool waylandShell = qEnvironmentVariableIsSet("QT_WAYLAND_SHELL_INTEGRATION");
     detectPlatform(argc, argv);
     QApplication app(argc, argv);
 
+	// don't leak the env variables to processes we start
     if (!qpaVariable) {
-        // don't leak the env variable to processes we start
         qunsetenv("QT_QPA_PLATFORM");
     }
 
@@ -293,6 +294,7 @@ inline void configureAboutData()
 inline void detectPlatform(int argc, char **argv)
 {
     if (qEnvironmentVariableIsSet("QT_QPA_PLATFORM")) {
+		qputenv("QT_WAYLAND_SHELL_INTEGRATION", "layer-shell");
         return;
     }
 
@@ -313,6 +315,7 @@ inline void detectPlatform(int argc, char **argv)
 
     if (qstrcmp(sessionType, "wayland") == 0) {
         qputenv("QT_QPA_PLATFORM", "wayland");
+		qputenv("QT_WAYLAND_SHELL_INTEGRATION", "layer-shell");
     } else if (qstrcmp(sessionType, "x11") == 0) {
         qputenv("QT_QPA_PLATFORM", "xcb");
     }
