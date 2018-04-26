@@ -56,7 +56,7 @@ public:
     ~WaylandInterface() override;
 
     void setDockExtraFlags(QWindow &view) override;
-    void setDockStruts(QWindow &view, const QRect &rect
+    void setDockStruts(QWindow *view, const QRect &rect
                        , Plasma::Types::Location location) override;
     void setWindowOnActivities(QWindow &view, const QStringList &activities) override;
 

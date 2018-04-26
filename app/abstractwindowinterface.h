@@ -59,7 +59,7 @@ public:
     virtual ~AbstractWindowInterface();
 
     virtual void setDockExtraFlags(QWindow &view) = 0;
-    virtual void setDockStruts(QWindow &view, const QRect &rect
+    virtual void setDockStruts(QWindow *view, const QRect &rect
                                , Plasma::Types::Location location) = 0;
     virtual void setWindowOnActivities(QWindow &window, const QStringList &activities) = 0;
 

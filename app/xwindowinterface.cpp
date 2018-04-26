@@ -90,12 +90,12 @@ void XWindowInterface::setDockExtraFlags(QWindow &view)
     KWindowSystem::setOnAllDesktops(view.winId(), true);
 }
 
-void XWindowInterface::setDockStruts(QWindow &view, const QRect &rect
+void XWindowInterface::setDockStruts(QWindow *view, const QRect &rect
                                      , Plasma::Types::Location location)
 {
     NETExtendedStrut strut;
 
-    const auto screen = view.screen();
+    const auto screen = view->screen();
 
     const QRect currentScreen {screen->geometry()};
     const QRect wholeScreen {{0, 0}, screen->virtualSize()};
@@ -138,7 +138,7 @@ void XWindowInterface::setDockStruts(QWindow &view, const QRect &rect
             return;
     }
 
-    KWindowSystem::setExtendedStrut(view.winId(),
+    KWindowSystem::setExtendedStrut(view->winId(),
                                     strut.left_width,   strut.left_start,   strut.left_end,
                                     strut.right_width,  strut.right_start,  strut.right_end,
                                     strut.top_width,    strut.top_start,    strut.top_end,

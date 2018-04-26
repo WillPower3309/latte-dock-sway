@@ -39,7 +39,7 @@ public:
     ~XWindowInterface() override;
 
     void setDockExtraFlags(QWindow &view) override;
-    void setDockStruts(QWindow &view, const QRect &rect
+    void setDockStruts(QWindow *view, const QRect &rect
                        , Plasma::Types::Location location) override;
     void setWindowOnActivities(QWindow &window, const QStringList &activities) override;
 

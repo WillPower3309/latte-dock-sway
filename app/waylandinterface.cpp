@@ -37,6 +37,8 @@
 
 #include <KWayland/Client/surface.h>
 
+#include <QtLayerShell/LayerView>
+
 using namespace KWayland::Client;
 
 namespace Latte {
@@ -131,28 +133,24 @@ void WaylandInterface::setDockExtraFlags(QWindow &view)
     Q_UNUSED(view)
 }
 
-void WaylandInterface::setDockStruts(QWindow &view, const QRect &rect , Plasma::Types::Location location)
+void WaylandInterface::setDockStruts(QWindow *view, const QRect &rect , Plasma::Types::Location location)
 {
-    if (!m_ghostWindows.contains(view.winId()))
-        m_ghostWindows[view.winId()] = new Private::GhostWindow(this);
+	fprintf(stderr, "setting struts %e\n", rect.y() + rect.height() / 2);
+	auto layerView = dynamic_cast<QtLayerShell::LayerView*>(view);
+	switch (location) {
+		case Plasma::Types::TopEdge:
+		case Plasma::Types::BottomEdge:
+			layerView->setExclusiveZone(rect.x() + rect.width() / 2);
+			break;
 
-    auto w = m_ghostWindows[view.winId()];
+		case Plasma::Types::LeftEdge:
+		case Plasma::Types::RightEdge:
+			layerView->setExclusiveZone(rect.y() + rect.height() / 2);
+			break;
 
-    switch (location) {
-        case Plasma::Types::TopEdge:
-        case Plasma::Types::BottomEdge:
-            w->setGeometry({rect.x() + rect.width() / 2, rect.y(), 1, rect.height()});
-            break;
-
-        case Plasma::Types::LeftEdge:
-        case Plasma::Types::RightEdge:
-            w->setGeometry({rect.x(), rect.y() + rect.height() / 2, rect.width(), 1});
-            break;
-
-        default:
-            break;
-    }
-
+		default:
+			break;
+	}
 }
 
 void WaylandInterface::setWindowOnActivities(QWindow &window, const QStringList &activities)
@@ -184,16 +182,12 @@ const std::list<WindowId> &WaylandInterface::windows() const
 
 void WaylandInterface::setKeepAbove(const QDialog &dialog, bool above) const
 {
-    if (above) {
-        KWindowSystem::setState(dialog.winId(), NET::KeepAbove);
-    } else {
-        KWindowSystem::clearState(dialog.winId(), NET::KeepAbove);
-    }
+	// TODO layer-shell
 }
 
 void WaylandInterface::skipTaskBar(const QDialog &dialog) const
 {
-    KWindowSystem::setState(dialog.winId(), NET::SkipTaskbar);
+	// Not necessary
 }
 
 void WaylandInterface::slideWindow(QWindow &view, AbstractWindowInterface::Slide location) const
